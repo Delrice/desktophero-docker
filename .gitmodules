@@ -1,0 +1,3 @@
+[submodule "desktophero"]
+	path = desktophero
+	url = git@github.com:stockto2/desktophero.git

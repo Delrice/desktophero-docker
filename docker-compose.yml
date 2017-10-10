@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  desktophero:
+    container_name: desktophero
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      desktophero:
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: desktophero_mysql
+    image: mysql:8.0.3
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: hero
+      MYSQL_USER: hero
+      MYSQL_PASSWORD: hero
+    networks:
+      desktophero:
+        aliases:
+          - db
+    volumes:
+      - desktophero:/var/lib/mysql
+      - ./desktophero/database/sample/quick-start.sql:/docker-entrypoint-initdb.d/quick-start.sql
+
+networks:
+  desktophero:
+
+volumes:
+  desktophero:
